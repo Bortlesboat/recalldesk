@@ -1,6 +1,6 @@
 import { MemWal } from "@mysten-incubation/memwal";
 import { readFile, writeFile } from "node:fs/promises";
-import { tickets } from "../dist/fixtures.js";
+import { tickets } from "../demo/fixtures.js";
 import { completedBlobs, triageWithServices } from "../lib/live-triage.mjs";
 
 const {

@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { correction, decide, replay, revoke } from "../dist/core.js";
-import { reviewed, tickets, training } from "../dist/fixtures.js";
+import { correction, decide, replay, revoke } from "../demo/core.js";
+import { reviewed, tickets, training } from "../demo/fixtures.js";
 import { readCompleteLedger, verifyTransaction } from "../lib/integrations.mjs";
 
 test("curated synthetic lessons survive a serialized new session", () => {

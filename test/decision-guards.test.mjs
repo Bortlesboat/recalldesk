@@ -1,8 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {decide} from "../dist/core.js";
-import {reviewed, tickets} from "../dist/fixtures.js";
-import {evaluate} from "../dist/evaluation.js";
+import {decide} from "../demo/core.js";
+import {reviewed, tickets} from "../demo/fixtures.js";
+import {evaluate} from "../demo/evaluation.js";
 test("negation and unrelated transaction effects cannot activate a lesson", () => {
   assert.equal(decide({...tickets[1], text: "The transaction has not failed"}, reviewed, tickets[1].chain).route, "Human review");
   assert.equal(decide({...tickets[1], digest: "3".repeat(44)}, reviewed, tickets[1].chain).route, "Human review");

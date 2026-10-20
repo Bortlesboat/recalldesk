@@ -5,3 +5,10 @@ node_modules/
 private/
 *.tgz
 .DS_Store
+.wrangler/
+.next/
+dist/
+public/demo/
+.sites-runtime/
+*.tsbuildinfo
+.openai/local*

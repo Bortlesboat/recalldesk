@@ -3,22 +3,24 @@
 Support triage that remembers reviewed corrections across sessions, explains each
 recommendation, and refuses to silently reuse revoked or incomplete memory.
 
-**Status:** working browser-local demo and tested integration adapters. Walrus
-Mainnet writes and live Tatum reads are not yet verified. This is not a completed
-Total Recall submission.
+**Status:** 13 Walrus Mainnet records written and recovered in a fresh process,
+including a revocation; real Tatum Sui Mainnet transaction read verified October
+20, 2026. The hosted server provides a fixed read-only evidence endpoint. This is
+not yet a completed Total Recall submission.
 
 ## Run
 
-Node 22+:
+Node 22.13+:
 
 ```powershell
 npm ci --ignore-scripts
 npm test
 npm run evaluate
-python -m http.server 5189 --bind 127.0.0.1 --directory dist
+npm run prepare:demo
+npm run dev
 ```
 
-Open `http://127.0.0.1:5189`. Select a synthetic ticket, run triage, save a reviewed
+Open the printed local URL. Select a synthetic ticket, run triage, save a reviewed
 correction, and start a new session. Try revoking a rule and rerunning the same ticket.
 Export/import carries a browser session to another browser.
 
@@ -51,6 +53,8 @@ blobs and reruns the triage decisions from the returned content. An uncertain
 write stops resubmission. Preserve `private/memory-receipts.json`.
 
 For a new CLI session, use the same private receipt manifest and `npm run memory -- read`.
+`npm run memory -- revoke auth` appends a revocation when the same explicit write
+confirmation is set. Pending jobs resume; uncertain submissions stop for reconciliation.
 Stable MemWal 0.1.8 does not expose the `listMemories` method documented by newer
 web docs. This implementation therefore proves completeness only against the
 writer's receipt manifest. Another writer's unknown events are not guaranteed to
@@ -81,8 +85,16 @@ record and routes a synthetic balance complaint using those actual returned
 values. It ignores the browser fixture's chain status. A failed transaction
 cannot activate a success-only lesson; failed RPC or incomplete recall produces
 no decision. The before/after result and matched blob receipts are saved in
-ignored `private/live-demo.json`. This is a CLI integration; the hosted browser
-sample continues to identify itself as browser-local until connected separately.
+ignored `private/live-demo.json`. The browser's separate **Check live evidence**
+button calls `/api/evidence`: a fixed read-only check with credentials held only
+in server secrets. It accepts no account, query or write request from visitors.
+Successful evidence may be reused for 60 seconds, labeled with its check time.
+Failures return an unavailable result, never a fixture. Configure the regular env
+keys plus `MEMWAL_RECEIPT_JSON` and `DEMO_DIGEST` on the server.
+
+Tatum's JSON-RPC endpoint was verified live for this demo. Tatum has announced
+JSON-RPC deprecation; a production successor should use its gRPC endpoint. This
+prototype does not claim long-term support for the legacy transport.
 
 ## What the tests cover
 
@@ -90,13 +102,13 @@ Cross-session replay, correction ordering, revocation, version boundaries,
 conflicting rules, untrusted memory shapes, complete recall against receipts,
 and Tatum error/mismatched-digest handling.
 
-## Submission work remaining
+## Evidence and submission
 
-- Verify real account access, 12 Mainnet writes and a real Tatum transaction read.
-- Connect the hosted demo to the authenticated integrations or clearly demonstrate
-  the integrated CLI alongside it.
+- Hosted evidence verified October 20: 13 completed Mainnet records, a fresh Tatum
+  transaction read, and the stored auth-r3 revocation routing the API case to review.
+- [Demo](https://recall-desk.bortles.chatgpt.site/demo/) and
+  [build notes](https://recall-desk.bortles.chatgpt.site/demo/blog.html).
 - Obtain independent reviewer cases before making any accuracy/generalization claim.
-- Publish the repo and an honest blog with actual integration receipts.
 - Record a 2–3 minute demo, complete the required entry fields and submit once.
 - Deadline: November 10, 2026, 17:00 UTC.
 

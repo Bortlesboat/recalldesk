@@ -25,7 +25,7 @@
         <small>Synthetic examples. No customer data.</small>
       </aside>
     </section>
-    <div class="statusbar"><span id="mode">● Browser demo · live integrations pending</span><span id="session-label">Session 01</span></div>
+    <div class="statusbar"><span id="mode">● Synthetic browser workspace · live evidence below</span><span id="session-label">Session 01</span></div>
     <section class="workspace">
       <nav class="queue" aria-label="Example tickets"><div class="sectiontitle">INBOX <span>06</span></div><div id="tickets"></div></nav>
       <article class="ticketdetail">
@@ -48,9 +48,10 @@
     <section class="measure"><div><p class="eyebrow">CHECK THE CHANGE</p><h2>Does the correction survive?</h2><p>The six tickets below exercise the current sample ledger. The separate comparison tests corrections, revocations and missing context against ordinary knowledge bases.</p></div>
       <div class="score"><span id="score">0 / 6</span><p>sample route matches</p><button class="quiet" id="evaluate">Compare memory approaches →</button></div></section>
     <section class="integration" id="comparisons" aria-live="polite"></section>
-    <section class="integration"><div><span class="sectiontitle">WALRUS MEMORY</span><p>Portable review history, with completed-write receipts and a check that recall returned every expected record.</p></div><div><span class="sectiontitle">TATUM SUI RPC</span><p>Transaction effects constrain routing. A missing balance is treated differently after a verified success or failure.</p></div><div><span class="sectiontitle">DEVELOPMENT STATUS</span><p>Browser-local learning works. Mainnet writes and real Tatum reads await account setup. Chain facts shown above are labeled samples.</p></div></section>
+    <section class="integration"><div><span class="sectiontitle">WALRUS MEMORY</span><p>Portable review history, with completed-write receipts and a check that recall returned every expected record.</p></div><div><span class="sectiontitle">TATUM SUI RPC</span><p>Fresh transaction effects constrain routing. Success alone cannot prove the intended recipient, asset or amount.</p></div><div><span class="sectiontitle">LIVE EVIDENCE</span><p>Read the dedicated synthetic Mainnet ledger and a public transaction through the server. Results identify their source and time.</p><button id="live-evidence" class="primary">Check live evidence ↗</button></div></section>
+    <section class="measure" id="live-result" aria-live="polite"><p>Live checks are separate from the browser-local sample above. No wallet action or memory write is available here.</p></section>
   </main>
-  <footer><span>RecallDesk / Total Recall 2026</span><span>No automatic replies. A person owns the final response.</span></footer>
+  <footer><span>RecallDesk / Total Recall 2026 · <a href="blog.html">Build notes</a> · <a href="https://github.com/Bortlesboat/recalldesk">Source</a></span><span>No automatic replies. A person owns the final response.</span></footer>
   <div id="toast" role="status"></div>
   <script type="module" src="app.js"></script>
 </body>

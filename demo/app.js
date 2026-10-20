@@ -96,3 +96,22 @@ $("import").onchange = async event => {
   event.target.value = "";
 };
 render();
+$("live-evidence").onclick = async () => {
+  const button=$("live-evidence"), box=$("live-result");button.disabled=true;
+  box.replaceChildren(element("p","Reading Tatum and Walrus Memory…"));
+  try {
+    const response=await fetch("/api/evidence",{signal:AbortSignal.timeout(30000)});
+    if(!response.ok) throw new Error("Live evidence is unavailable. No fixture was substituted.");
+    const result=await response.json();
+    const details=element("div", "");
+    details.append(element("h2",`${result.memory.completedRecords} Mainnet memories recovered`),
+      element("p",`Tatum: ${result.chain.status}. Checked ${new Date(result.checkedAt).toLocaleString()}. Cache: ${result.cache}.`),
+      element("p",`Decision: ${result.decision.route}. ${result.decision.reason}`),
+      element("p",`Revocation ${result.revocation.eventId ?? "not present"}: API ticket now routes to ${result.revocation.decision.route}.`),
+      element("small","Synthetic support cases; real provider reads. Completeness is relative to the receipt manifest. No accuracy claim."));
+    const receipt=element("details", ""), summary=element("summary","Inspect the provider evidence");
+    receipt.append(summary,element("pre",JSON.stringify(result,null,2)));
+    box.replaceChildren(details,receipt);
+  } catch(error) {box.replaceChildren(element("p",error.message));}
+  finally{button.disabled=false;}
+};

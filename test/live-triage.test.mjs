@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { completedBlobs, triageWithServices } from "../lib/live-triage.mjs";
-import { reviewed, tickets } from "../dist/fixtures.js";
+import { reviewed, tickets } from "../demo/fixtures.js";
 
 const receipt = {
   network: "mainnet", accountId: "test-account", namespace: "test-namespace",
