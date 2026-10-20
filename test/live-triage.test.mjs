@@ -24,7 +24,8 @@ const args = {
 test("combined triage uses recovered memory and the provider's effects", async () => {
   const result = await triageWithServices({...args, fetcher: fixtureRpc("success")});
   assert.equal(result.beforeMemory.route, "Human review");
-  assert.equal(result.decision.route, "Wallet UI");
+  assert.equal(result.decision.route, "Human review");
+  assert.match(result.decision.reason, /do not infer a wallet display fault/);
   assert.equal(result.memory.completedRecords, 12);
   assert.deepEqual(result.memory.matched, [{id: "index-delay-r2", blobId: "fixture-blob-6"}]);
   assert.equal(result.chain.digest, digest);

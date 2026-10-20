@@ -1,8 +1,9 @@
 import {decide, replay, revoke} from "./core.js";
 import {reviewed, tickets} from "./fixtures.js";
+import {evaluate} from "./evaluation.js";
 
 const $ = id => document.getElementById(id);
-const key = "recalldesk-synthetic-ledger-v1";
+const key = "recalldesk-synthetic-ledger-v2";
 let events = [], selected = 0, session = 1;
 try { events = JSON.parse(localStorage.getItem(key) ?? "[]"); replay(events); }
 catch { events = []; }
@@ -25,7 +26,7 @@ function render() {
   }));
   const ticket = tickets[selected], lesson = reviewed[selected + 6];
   $("ticket-id").textContent = ticket.id;
-  $("version").textContent = `SDK v${ticket.version}`;
+  $("version").textContent = `Sample app v${ticket.version}`;
   $("ticket-title").textContent = ticket.title;
   $("ticket-text").textContent = ticket.text;
   $("chain").textContent = ticket.chain.status === "unverified"
@@ -66,7 +67,17 @@ $("learn-all").onclick = () => learn(reviewed);
 $("learn-one").onclick = () => learn([reviewed[selected], reviewed[selected + 6]]);
 $("new-session").onclick = () => {session += 1; selected = 0; render(); notify("Fresh session. Reviewed memory carried forward.");};
 $("clear").onclick = () => {events = []; persist(); render(); notify("Synthetic sample reset.");};
-$("evaluate").onclick = () => {render(); notify("Evaluated all six synthetic tickets against the current ledger.");};
+$("evaluate").onclick = () => {
+  const report = evaluate();
+  const names = {fixedKnowledgeBase: "Original knowledge base", staleRetrieval: "Stale retrieval",
+    receiptCompleteReplay: "Complete memory replay", currentKnowledgeBase: "Updated knowledge base"};
+  $("comparisons").replaceChildren(...Object.entries(report.results).map(([name,result]) => {
+    const box = element("div", "");
+    box.append(element("strong", names[name]), element("p", `${result.correct}/${result.total} contract cases; ${result.wrongRoutes} wrong routes; ${result.abstentions} human reviews; ${result.unnecessaryAbstentions} unnecessary reviews.`));
+    return box;
+  }), element("p", "Nine constructed cases, authored with the code. Complete replay ties a correctly updated knowledge base. This tests memory lifecycle behavior, not real-world support accuracy."));
+  notify("Comparison includes correct human reviews. Stale retrieval is an injected failure, not a measured provider result.");
+};
 $("export").onclick = () => {
   const url = URL.createObjectURL(new Blob([JSON.stringify({schema: "recalldesk-export/1", mode: "browser-demo", events}, null, 2)], {type: "application/json"}));
   const link = document.createElement("a"); link.href = url; link.download = "recalldesk-session.json"; link.click();

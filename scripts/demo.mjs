@@ -19,7 +19,7 @@ if (completedBlobs(receipt, accountId, namespace).length < 10) {
 const client = MemWal.create({key, accountId, namespace, serverUrl: "https://relayer.memory.walrus.xyz"});
 const result = await triageWithServices({
   client, accountId, namespace, receipt, digest, apiKey,
-  ticket: tickets[0],
+  ticket: {...tickets[0], digest},
 });
 const output = {
   ...result,

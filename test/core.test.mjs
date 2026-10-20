@@ -4,7 +4,7 @@ import { correction, decide, replay, revoke } from "../dist/core.js";
 import { reviewed, tickets, training } from "../dist/fixtures.js";
 import { readCompleteLedger, verifyTransaction } from "../lib/integrations.mjs";
 
-test("learning changes held-out wording and survives a serialized new session", () => {
+test("curated synthetic lessons survive a serialized new session", () => {
   for (const ticket of tickets) {
     assert.equal(decide(ticket, []).route, "Human review");
     assert.equal(decide(ticket, JSON.parse(JSON.stringify(reviewed)), ticket.chain).route, ticket.expected);

@@ -1,5 +1,5 @@
 // The same replay and decision code runs in the browser and the CLI.
-export const routes = ["Developer support", "Wallet UI", "Protocol engineering", "Account support"];
+export const routes = ["Developer support", "Wallet UI", "Protocol engineering", "Account support", "Human review"];
 const types = ["lesson", "revoke"];
 const norm = text => text.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
 
@@ -44,9 +44,16 @@ export function decide(ticket, events, chain = { status: "unverified" }) {
     throw new Error("Ticket text and supported version are required");
   }
   const text = norm(ticket.text);
+  // This deterministic prototype does not interpret negation reliably. Route
+  // ambiguous language for review rather than treating a negated symptom as fact.
+  if (/\b(no|not|never|isn t|wasn t|doesn t|don t|didn t|isnt|wasnt|doesnt|dont|didnt)\b/.test(text)) return {
+    route: "Human review", priority: "normal", matched: [],
+    reason: "This ticket contains negation; confirm the symptom before applying a keyword lesson.",
+  };
   const matches = replay(events).filter(rule =>
     (rule.version === "any" || rule.version === ticket.version) &&
-    (rule.chainStatus === "any" || rule.chainStatus === chain.status) &&
+    (rule.chainStatus === "any" || (rule.chainStatus === chain.status &&
+      typeof ticket.digest === "string" && ticket.digest === chain.digest)) &&
     rule.match.every(word => (` ${text} `).includes(` ${norm(word)} `))
   );
   if (!matches.length) return {

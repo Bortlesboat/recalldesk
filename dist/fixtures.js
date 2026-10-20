@@ -9,7 +9,7 @@ const lessons = [
   ["auth", ["api", "401"], "Developer support", "normal", "any", "any",
     "Check the API host and authentication header. Never request a key in a public ticket."],
   ["pagination", ["cursor", "empty"], "Developer support", "normal", "any", "2",
-    "Version 2 filters after paging. Continue while has_more is true, including empty pages."],
+    "Synthetic app v2 uses filtered pagination. Continue while has_more is true, including empty pages."],
   ["memory", ["memory", "old"], "Developer support", "normal", "any", "any",
     "Recall can omit newer corrections. Load the complete bounded ledger before applying revisions."],
   ["login", ["login", "loop"], "Account support", "normal", "any", "any",
@@ -24,8 +24,9 @@ export const reviewed = [
   ...training,
   ...training.map((rule, index) => correction({
     ...rule,
+    ...(index === 0 ? {route: "Human review"} : {}),
     reason: rule.reason + [
-      " Confirm the recipient and asset; success alone does not prove the intended transfer.",
+      " CORRECTION: do not infer a wallet display fault. Confirm the recipient, asset and amount; success alone does not prove the intended transfer.",
       " Do not automatically retry a failed transaction.",
       " A 401 alone does not prove the key was revoked.",
       " Stop and restart a snapshot if the service requests resynchronization.",
@@ -36,8 +37,8 @@ export const reviewed = [
 ];
 
 export const tickets = [
-  {id: "RD-201", title: "Transfer arrived, balance still missing", text: "My balance is missing after yesterday's transfer.", version: "2", chain: {status: "success", source: "synthetic fixture"}, expected: "Wallet UI"},
-  {id: "RD-202", title: "A failed transaction", text: "The transaction failed when I confirmed it.", version: "2", chain: {status: "failure", source: "synthetic fixture"}, expected: "Protocol engineering"},
+  {id: "RD-201", title: "Transaction succeeded, balance still missing", text: "My balance is missing after yesterday's transfer.", version: "2", digest: "1".repeat(44), chain: {status: "success", digest: "1".repeat(44), source: "synthetic fixture"}, expected: "Human review"},
+  {id: "RD-202", title: "A failed transaction", text: "The transaction failed when I confirmed it.", version: "2", digest: "2".repeat(44), chain: {status: "failure", digest: "2".repeat(44), source: "synthetic fixture"}, expected: "Protocol engineering"},
   {id: "RD-203", title: "SDK returns 401", text: "My API request gets a 401 in the new SDK.", version: "2", chain: {status: "unverified"}, expected: "Developer support"},
   {id: "RD-204", title: "An empty page with a cursor", text: "The cursor points to an empty response in version 2.", version: "2", chain: {status: "unverified"}, expected: "Developer support"},
   {id: "RD-205", title: "Yesterday's correction disappeared", text: "The memory answer keeps returning the old instruction.", version: "2", chain: {status: "unverified"}, expected: "Developer support"},

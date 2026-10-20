@@ -23,8 +23,12 @@ correction, and start a new session. Try revoking a rule and rerunning the same 
 Export/import carries a browser session to another browser.
 
 The demo uses a deterministic, explainable rule agent; it does not call an LLM.
-Its six-ticket fixture evaluation is a behavior demonstration, not a general
-support-accuracy benchmark.
+The six browser tickets are illustrative fixtures. `npm run evaluate` compares
+nine constructed memory-lifecycle cases with a fixed knowledge base, deliberately
+stale retrieval, and an equivalently updated knowledge base. It reports wrong
+routes and abstentions separately. Complete replay ties the updated knowledge
+base; no advantage over a correctly maintained database is claimed. These cases
+were authored with the implementation and are not an independent held-out test.
 
 ## Integration path
 
@@ -61,7 +65,10 @@ npm run verify-transaction -- <PUBLIC_SUI_TRANSACTION_DIGEST>
 
 This performs a read through Tatum's Sui Mainnet gateway and checks the returned
 digest and effects. No wallet signing, transfers or retry transaction is performed.
-Transaction success alone does not prove the intended recipient or asset.
+Transaction success alone does not prove the intended recipient, asset or amount:
+the corrected lesson requires human review. Chain-specific lessons also require
+the ticket's exact digest. The deterministic matcher sends negated symptoms to
+review rather than trying to interpret them; this can over-abstain on real text.
 
 Run both integrations together after at least 10 writes have completed:
 
@@ -88,7 +95,7 @@ and Tatum error/mismatched-digest handling.
 - Verify real account access, 12 Mainnet writes and a real Tatum transaction read.
 - Connect the hosted demo to the authenticated integrations or clearly demonstrate
   the integrated CLI alongside it.
-- Expand held-out evaluation and collect real reviewer feedback.
+- Obtain independent reviewer cases before making any accuracy/generalization claim.
 - Publish the repo and an honest blog with actual integration receipts.
 - Record a 2–3 minute demo, complete the required entry fields and submit once.
 - Deadline: November 10, 2026, 17:00 UTC.
