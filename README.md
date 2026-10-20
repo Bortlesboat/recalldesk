@@ -109,7 +109,8 @@ and Tatum error/mismatched-digest handling.
 - [Demo](https://recall-desk.bortles.chatgpt.site/demo/) and
   [build notes](https://recall-desk.bortles.chatgpt.site/demo/blog.html).
 - Obtain independent reviewer cases before making any accuracy/generalization claim.
-- Record a 2–3 minute demo, complete the required entry fields and submit once.
+- [2:50 video, English captions and transcript](https://github.com/Bortlesboat/recalldesk/releases/tag/total-recall-demo-v1).
+- Complete the required entry fields and submit once. Organizer acceptance is unconfirmed.
 - Deadline: November 10, 2026, 17:00 UTC.
 
 ## Sources
