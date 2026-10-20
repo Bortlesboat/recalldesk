@@ -6,7 +6,8 @@ recommendation, and refuses to silently reuse revoked or incomplete memory.
 **Status:** 13 Walrus Mainnet records written and recovered in a fresh process,
 including a revocation; real Tatum Sui Mainnet transaction read verified October
 20, 2026. The hosted server provides a fixed read-only evidence endpoint. This is
-not yet a completed Total Recall submission.
+the submitted Total Recall entry, received by the official form on October 20,
+2026. Judging and any prize remain unconfirmed.
 
 ## Run
 
@@ -110,7 +111,7 @@ and Tatum error/mismatched-digest handling.
   [build notes](https://recall-desk.bortles.chatgpt.site/demo/blog.html).
 - Obtain independent reviewer cases before making any accuracy/generalization claim.
 - [2:50 video, English captions and transcript](https://github.com/Bortlesboat/recalldesk/releases/tag/total-recall-demo-v1).
-- Complete the required entry fields and submit once. Organizer acceptance is unconfirmed.
+- Submitted October 20, 2026; the official form confirmed receipt. Judging is pending.
 - Deadline: November 10, 2026, 17:00 UTC.
 
 ## Sources
